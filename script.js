@@ -22,10 +22,16 @@ $(function () {
   // TODO: Add code to display the current date in the header of the page.
 });
 
-// -------------------------------------------------------------------------------------------------------
+// -------------------------------My Work Starts Here!!!!----------------------------------------------------------
 
 // Global variables
 var dayEl = $("#currentDay");
+var textEl = $(".description");
+// textEl.val("see doctor")
+// console.log("text added => " + textEl.val())
+var saveBtn = $(".btn");
+var textId = ""
+
 
 // Create a function that will update date every 24hours (86400000 milliseconds)
 setInterval(updateDate(), 86400000);
@@ -38,3 +44,31 @@ function updateDate(){
 }
 
 
+// when I change/type message in textarea field, I want a random id attribute to be created for that specific text area.
+textEl.on("blur", function(){
+  console.log("This is the text are field => " + textEl)
+  textId = 'textarea-' + Date.now() + '-' + Math.floor(Math.random()*1000);
+  console.log("randomg id generate => " + textId)
+});
+
+// When save button is pressed, I want the message to be saved
+saveBtn.on("click", function(){
+  console.log("Save button clicked")
+  // I want to add random id generated above to the textarea element
+  textEl.attr('id', textId)
+  // I want to change the value of textarea element to whatever user types in
+  // textEl.on('keyup', function(){
+  //   var appointment = textEl.val();
+  //   console.log("User type => " + appointment)
+  // })
+  var appointment = textEl.val();
+  console.log("User type => " + appointment)
+  // I want to save text in the localStorage using setItem() method
+  localStorage.setItem("appointment", appointment);
+  // I want to display message in that textarea field only and make it persist when the page reload.
+  var appointmentText = (localStorage.getItem("appointment"));
+  console.log("Appt stored => " + appointmentText)
+  if(appointmentText){
+    textEl.val(appointment)
+  }
+})
