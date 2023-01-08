@@ -21,3 +21,20 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+// -------------------------------------------------------------------------------------------------------
+
+// Global variables
+var dayEl = $("#currentDay");
+
+// Create a function that will update date every 24hours (86400000 milliseconds)
+setInterval(updateDate(), 86400000);
+function updateDate(){
+  // Create today's date
+  var now = dayjs();
+  var today = now.format('dddd, MMMM D')
+  // add text to the webpage
+  dayEl.text(today)
+}
+
+
