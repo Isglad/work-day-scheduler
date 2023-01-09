@@ -33,8 +33,23 @@ var textId = "";
 var textValue = "";
 var storedMessage = "";
 var myPlanner = {};
+var today = dayjs();
 
 function dayScheduler(time) {
+  var hour = "";
+  var timeString = time.toString()
+  if(time < 12){
+    hour = timeString.concat("AM")
+  }
+  else if (time === 12){
+    hour = timeString.concat("PM")
+  }
+  else{
+    time -= 12
+    timeString = time.toString()
+    hour = timeString.concat("PM")
+  }
+
   // create
   var sectionEl = $("<section>");
   var divEl = $("<div>");
@@ -42,11 +57,11 @@ function dayScheduler(time) {
   var buttonEl = $("<button>");
   var iconEl = $("<i>");
   // set
-  sectionEl.class("row time-block").attr("id", time);
-  divEl.class("col-2 col-md-1 hour text-center py-3");
-  textEl.class("col-8 col-md-10 description").attr("rows", "3");
-  buttonEl.class("btn saveBtn col-2 col-md-1").attr("aria-label", "save");
-  iconEl.class("fas fa-save").attr("aria-hidden", "true");
+  sectionEl.addClass("row time-block").attr("id", hour);
+  divEl.addClass("col-2 col-md-1 hour text-center py-3").text(hour);
+  textEl.addClass("col-8 col-md-10 description").attr("rows", "3");
+  buttonEl.addClass("btn saveBtn col-2 col-md-1").attr("aria-label", "save");
+  iconEl.addClass("fas fa-save").attr("aria-hidden", "true");
   // append
   $("#main-container").append(sectionEl);
   sectionEl.append(divEl);
@@ -82,11 +97,10 @@ function dayScheduler(time) {
 // Create a function that will update date every 24hours (86400000 milliseconds)
 setInterval(updateDate(), 86400000);
 function updateDate() {
-  // Create today's date
-  var now = dayjs();
-  var today = now.format("dddd, MMMM D");
+  // Create currentDate's date
+  var currentDate = today.format("dddd, MMMM D");
   // add text to the webpage
-  dayEl.text(today);
+  dayEl.text(currentDate);
 }
 
 // when I change/type message in textarea field, I want a random id attribute to be created for that specific text area.
@@ -130,3 +144,11 @@ window.addEventListener("beforeunload", onPageReload());
 // type a message
 
 console.log(myPlanner);
+
+function init(){
+  for(var i = 9; i < 18; i++){
+    dayScheduler(i)
+  }
+  
+}
+init();
