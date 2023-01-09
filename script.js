@@ -28,9 +28,10 @@ $(function () {
 var dayEl = $("#currentDay");
 var textEl = $(".description");
 var saveBtn = $(".btn");
+var timeBlock = $(".time-block");
 var textId = "";
 var textValue = "";
-var storeMessage = "";
+var storedMessage = "";
 
 
 // Create a function that will update date every 24hours (86400000 milliseconds)
@@ -53,19 +54,31 @@ textEl.on('blur', function() {
   $(this).val($(this).val());
   textValue = $(this).val();
   console.log("your text message => " + textValue);
+  // console.log("your text message => " + $(this).val())
   // I want to save text in the localStorage using setItem() method
-  localStorage.setItem('message', $(this).val());
+  localStorage.setItem('appointment', textValue);
+  // var appointment = {"appt": textValue}
+  // localStorage.setItem("appointment", JSON.stringify(appointment))
 });
 
 // When save button is pressed, I want the message to be saved
 saveBtn.on('click', function(){
+   onPageReload();
+})
+
+function onPageReload(){
   // I want to retrieve user message from localStorage
-  storedMessage = localStorage.getItem('message');
+  storedMessage = localStorage.getItem('appointment');
+  // storedMessage = JSON.parse(localStorage.getItem("appointment"))
   console.log("message stored => " + storedMessage);
   // If there is a content availabe in localStorage, I want to display it in that textarea element only and make it persist when the page reload.
   if(storedMessage){
+    console.log("local storage has content!");
     // $(textId).val(storedMessage);
     // document.getElementById("textId").innerHTML = storeMessage; 
-    this.innerHTML = storeMessage;
-  } 
-})
+    this.innerHTML = storedMessage;
+    // textValue = storedMessage
+  }
+}
+
+window.addEventListener('beforeunload', onPageReload());
