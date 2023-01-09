@@ -37,17 +37,15 @@ var today = dayjs();
 
 function dayScheduler(time) {
   var hour = "";
-  var timeString = time.toString()
-  if(time < 12){
-    hour = timeString.concat("AM")
-  }
-  else if (time === 12){
-    hour = timeString.concat("PM")
-  }
-  else{
-    time -= 12
-    timeString = time.toString()
-    hour = timeString.concat("PM")
+  var timeString = time.toString();
+  if (time < 12) {
+    hour = timeString.concat("AM");
+  } else if (time === 12) {
+    hour = timeString.concat("PM");
+  } else {
+    var formatTime = time - 12;
+    timeString = formatTime.toString();
+    hour = timeString.concat("PM");
   }
 
   // create
@@ -77,7 +75,7 @@ function dayScheduler(time) {
     var targetDiv = event.target.closest("div");
     var tempId = targetDiv.id;
     // var tempValue = $("#hour-12 input").val();
-    var tempValue = $(textEl).val()
+    var tempValue = $(textEl).val();
     console.log(tempId);
     // console.log(tempValue.children)
     console.log(tempValue);
@@ -92,6 +90,20 @@ function dayScheduler(time) {
     // push the object to localStorage with setItem
     // retrieve with getItem
   });
+
+  // compare time to today
+  // why: to see if time is in past, present, future
+  // how: with if condition
+  // console.log(today.format("HH"));
+  // console.log(typeof parseInt(today.format('hh')))
+  // console.log(time)
+  if (time < parseInt(today.format("HH"))) {
+    textEl.addClass("past");
+  } else if (time === parseInt(today.format("HH"))) {
+    textEl.addClass("present");
+  } else {
+    textEl.addClass("future");
+  }
 }
 
 // Create a function that will update date every 24hours (86400000 milliseconds)
@@ -145,10 +157,9 @@ window.addEventListener("beforeunload", onPageReload());
 
 console.log(myPlanner);
 
-function init(){
-  for(var i = 9; i < 18; i++){
-    dayScheduler(i)
+function init() {
+  for (var i = 9; i < 18; i++) {
+    dayScheduler(i);
   }
-  
 }
 init();
