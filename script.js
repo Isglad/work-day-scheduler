@@ -36,29 +36,17 @@ function dayScheduler(time) {
 
   // When save button is pressed, I want the message to be saved
   buttonEl.on("click", function () {
-    var value = $(this)
-    .siblings('.description')
-    .val();
-    console.log(value)
-  var time = $(this)
-    .parent()
-    .attr('id');
-    console.log(time)
-
-    myPlanner[time] = value;
+    myPlanner[hour] = textEl.val();
+    console.log(myPlanner[hour])
 
     // I want to store myPlanner object to localStorage
     localStorage.setItem("appointment", JSON.stringify(myPlanner))
-    // I want to retrieve value of key time
-    localStorage.getItem(time)
   });
 
   // compare time to today
   // why: to see if time is in past, present, future
   // how: with if condition
-  // console.log(today.format("HH"));
-  // console.log(typeof parseInt(today.format('hh')))
-  // console.log(time)
+
   if (time < parseInt(today.format("HH"))) {
     textEl.addClass("past");
   } else if (time === parseInt(today.format("HH"))) {
