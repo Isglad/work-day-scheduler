@@ -31,7 +31,7 @@ $(function () {
 // var textId = "";
 // var textValue = "";
 // var storedMessage = "";
-var myPlanner = {};
+myPlanner = new Object();
 var today = dayjs();
 
 function dayScheduler(time) {
@@ -71,17 +71,22 @@ function dayScheduler(time) {
     // get hour id
     // why: to retrieve the typed msg
     // how: event.target, look for the closest parent div
-    var targetDiv = event.target.closest("div");
-    var tempId = targetDiv.id;
+    // var targetDiv = event.target.closest("div");
+    // var tempId = targetDiv.id;
     // var tempValue = $("#hour-12 input").val();
-    var tempValue = $(textEl).val();
-    console.log(tempId);
+    // var tempValue = $(textEl).val();
+    // console.log(tempId);
     // console.log(tempValue.children)
-    console.log(tempValue);
-    myPlanner = {
-      tempId: tempValue,
-    };
-    console.log(myPlanner);
+    // console.log(tempValue);
+    // hour.children(1)
+    ////////////////
+    myPlanner[hour] = textEl.val();
+    console.log(typeof hour);
+    console.log(hour);
+    console.log(textEl.val());
+    // console.log(myPlanner[hour])
+    // console.log(myPlanner);
+    ////////////////
     // saveItems to an object variable
     // why: to keep it organized
     // how: with a variable declaration
@@ -122,14 +127,22 @@ function updateDate() {
 console.log(myPlanner);
 
 // a function that reads local storage
-function readLocalStorage(){
-  console.log(myPlanner)
+function readLocalStorage() {
+  console.log(myPlanner);
   myPlanner = JSON.parse(localStorage.getItem("myPlannerStringify"));
-  console.log(myPlanner)
+  console.log(myPlanner);
 }
 
-function writeLocalStorage(){
+function writeLocalStorage() {
   localStorage.setItem("myPlannerStringify", JSON.stringify(myPlanner));
+}
+
+function renderAppointment() {
+  if (myPlanner){
+    for (var [key, value] of Object.entries(myPlanner)) {
+      $(`#${key} textarea`).val(value);
+    }
+  }
 }
 
 function init() {
@@ -137,5 +150,6 @@ function init() {
     dayScheduler(i);
   }
   readLocalStorage();
+  renderAppointment();
 }
 init();
