@@ -1,7 +1,8 @@
+// Global variable 
 var myPlanner = {};
 var today = dayjs();
-// var appointment;
 
+// a function that builds my app
 function dayScheduler(time) {
   var hour = "";
   var timeString = time.toString();
