@@ -87,6 +87,7 @@ function dayScheduler(time) {
     // how: with a variable declaration
 
     // push the object to localStorage with setItem
+    writeLocalStorage();
     // retrieve with getItem
   });
 
@@ -120,9 +121,21 @@ function updateDate() {
 
 console.log(myPlanner);
 
+// a function that reads local storage
+function readLocalStorage(){
+  console.log(myPlanner)
+  myPlanner = JSON.parse(localStorage.getItem("myPlannerStringify"));
+  console.log(myPlanner)
+}
+
+function writeLocalStorage(){
+  localStorage.setItem("myPlannerStringify", JSON.stringify(myPlanner));
+}
+
 function init() {
   for (var i = 9; i < 18; i++) {
     dayScheduler(i);
   }
+  readLocalStorage();
 }
 init();
