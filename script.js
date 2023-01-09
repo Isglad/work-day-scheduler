@@ -32,53 +32,79 @@ var timeBlock = $(".time-block");
 var textId = "";
 var textValue = "";
 var storedMessage = "";
-
+var myPlanner = {};
 
 // Create a function that will update date every 24hours (86400000 milliseconds)
 setInterval(updateDate(), 86400000);
-function updateDate(){
+function updateDate() {
   // Create today's date
   var now = dayjs();
-  var today = now.format('dddd, MMMM D');
+  var today = now.format("dddd, MMMM D");
   // add text to the webpage
   dayEl.text(today);
 }
 
 // when I change/type message in textarea field, I want a random id attribute to be created for that specific text area.
-textEl.on('blur', function() {
+textEl.on("blur", function () {
   // I want to generate a random Id
   textId = Math.random().toString(36).substr(2, 9);
   console.log("your id is => " + textId);
   // I want to add random id attribute to the textarea element
-  textEl.attr('id', textId);
+  textEl.attr("id", textId);
   $(this).val($(this).val());
   textValue = $(this).val();
   console.log("your text message => " + textValue);
   // console.log("your text message => " + $(this).val())
   // I want to save text in the localStorage using setItem() method
-  localStorage.setItem('appointment', textValue);
+  localStorage.setItem("appointment", textValue);
   // var appointment = {"appt": textValue}
   // localStorage.setItem("appointment", JSON.stringify(appointment))
 });
 
 // When save button is pressed, I want the message to be saved
-saveBtn.on('click', function(){
-   onPageReload();
-})
+saveBtn.on("click", function (event) {
+  // get hour id
+  // why: to retrieve the typed msg
+  // how: event.target, look for the closest parent div
+  var targetDiv = event.target.closest("div");
+  var tempId = targetDiv.id;
+  var tempValue = $("#hour-12 input").val();
+  console.log(tempId);
+  // console.log(tempValue.children)
+  console.log(tempValue);
+  myPlanner = {
+    tempId: tempValue,
+  };
+  console.log(myPlanner);
+  // saveItems to an object variable
+  // why: to keep it organized
+  // how: with a variable declaration
 
-function onPageReload(){
+  // push the object to localStorage with setItem
+  // retrieve with getItem
+});
+
+function onPageReload() {
   // I want to retrieve user message from localStorage
-  storedMessage = localStorage.getItem('appointment');
+  storedMessage = localStorage.getItem("appointment");
   // storedMessage = JSON.parse(localStorage.getItem("appointment"))
   console.log("message stored => " + storedMessage);
   // If there is a content availabe in localStorage, I want to display it in that textarea element only and make it persist when the page reload.
-  if(storedMessage){
+  if (storedMessage) {
     console.log("local storage has content!");
     // $(textId).val(storedMessage);
-    // document.getElementById("textId").innerHTML = storeMessage; 
+    // document.getElementById("textId").innerHTML = storeMessage;
     this.innerHTML = storedMessage;
+    console.log(this);
     // textValue = storedMessage
   }
 }
 
-window.addEventListener('beforeunload', onPageReload());
+window.addEventListener("beforeunload", onPageReload());
+
+// create an object for date and text
+// why:
+// empty array
+// type a message
+
+console.log(myPlanner);
