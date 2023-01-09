@@ -34,6 +34,51 @@ var textValue = "";
 var storedMessage = "";
 var myPlanner = {};
 
+function dayScheduler(time) {
+  // create
+  var sectionEl = $("<section>");
+  var divEl = $("<div>");
+  var textEl = $("<textarea>");
+  var buttonEl = $("<button>");
+  var iconEl = $("<i>");
+  // set
+  sectionEl.class("row time-block").attr("id", time);
+  divEl.class("col-2 col-md-1 hour text-center py-3");
+  textEl.class("col-8 col-md-10 description").attr("rows", "3");
+  buttonEl.class("btn saveBtn col-2 col-md-1").attr("aria-label", "save");
+  iconEl.class("fas fa-save").attr("aria-hidden", "true");
+  // append
+  $("#main-container").append(sectionEl);
+  sectionEl.append(divEl);
+  sectionEl.append(textEl);
+  sectionEl.append(buttonEl);
+  buttonEl.append(iconEl);
+
+  // When save button is pressed, I want the message to be saved
+  buttonEl.on("click", function (event) {
+    // get hour id
+    // why: to retrieve the typed msg
+    // how: event.target, look for the closest parent div
+    var targetDiv = event.target.closest("div");
+    var tempId = targetDiv.id;
+    // var tempValue = $("#hour-12 input").val();
+    var tempValue = $(textEl).val()
+    console.log(tempId);
+    // console.log(tempValue.children)
+    console.log(tempValue);
+    myPlanner = {
+      tempId: tempValue,
+    };
+    console.log(myPlanner);
+    // saveItems to an object variable
+    // why: to keep it organized
+    // how: with a variable declaration
+
+    // push the object to localStorage with setItem
+    // retrieve with getItem
+  });
+}
+
 // Create a function that will update date every 24hours (86400000 milliseconds)
 setInterval(updateDate(), 86400000);
 function updateDate() {
@@ -59,29 +104,6 @@ textEl.on("blur", function () {
   localStorage.setItem("appointment", textValue);
   // var appointment = {"appt": textValue}
   // localStorage.setItem("appointment", JSON.stringify(appointment))
-});
-
-// When save button is pressed, I want the message to be saved
-saveBtn.on("click", function (event) {
-  // get hour id
-  // why: to retrieve the typed msg
-  // how: event.target, look for the closest parent div
-  var targetDiv = event.target.closest("div");
-  var tempId = targetDiv.id;
-  var tempValue = $("#hour-12 input").val();
-  console.log(tempId);
-  // console.log(tempValue.children)
-  console.log(tempValue);
-  myPlanner = {
-    tempId: tempValue,
-  };
-  console.log(myPlanner);
-  // saveItems to an object variable
-  // why: to keep it organized
-  // how: with a variable declaration
-
-  // push the object to localStorage with setItem
-  // retrieve with getItem
 });
 
 function onPageReload() {
