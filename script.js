@@ -25,13 +25,12 @@ $(function () {
 // -------------------------------My Work Starts Here!!!!----------------------------------------------------------
 
 // Global variables
-var dayEl = $("#currentDay");
-var textEl = $(".description");
-var saveBtn = $(".btn");
-var timeBlock = $(".time-block");
-var textId = "";
-var textValue = "";
-var storedMessage = "";
+// var textEl = $(".description");
+// var saveBtn = $(".btn");
+// var timeBlock = $(".time-block");
+// var textId = "";
+// var textValue = "";
+// var storedMessage = "";
 var myPlanner = {};
 var today = dayjs();
 
@@ -112,44 +111,8 @@ function updateDate() {
   // Create currentDate's date
   var currentDate = today.format("dddd, MMMM D");
   // add text to the webpage
-  dayEl.text(currentDate);
+  $("#currentDay").text(currentDate);
 }
-
-// when I change/type message in textarea field, I want a random id attribute to be created for that specific text area.
-textEl.on("blur", function () {
-  // I want to generate a random Id
-  textId = Math.random().toString(36).substr(2, 9);
-  console.log("your id is => " + textId);
-  // I want to add random id attribute to the textarea element
-  textEl.attr("id", textId);
-  $(this).val($(this).val());
-  textValue = $(this).val();
-  console.log("your text message => " + textValue);
-  // console.log("your text message => " + $(this).val())
-  // I want to save text in the localStorage using setItem() method
-  localStorage.setItem("appointment", textValue);
-  // var appointment = {"appt": textValue}
-  // localStorage.setItem("appointment", JSON.stringify(appointment))
-});
-
-function onPageReload() {
-  // I want to retrieve user message from localStorage
-  storedMessage = localStorage.getItem("appointment");
-  // storedMessage = JSON.parse(localStorage.getItem("appointment"))
-  console.log("message stored => " + storedMessage);
-  // If there is a content availabe in localStorage, I want to display it in that textarea element only and make it persist when the page reload.
-  if (storedMessage) {
-    console.log("local storage has content!");
-    // $(textId).val(storedMessage);
-    // document.getElementById("textId").innerHTML = storeMessage;
-    this.innerHTML = storedMessage;
-    console.log(this);
-    // textValue = storedMessage
-  }
-}
-
-window.addEventListener("beforeunload", onPageReload());
-
 // create an object for date and text
 // why:
 // empty array
