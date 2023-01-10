@@ -21,6 +21,31 @@
 
 Welcome to the Work Day Scheduler! This is a simple web application that allows you to add important events by the hour so that you can manage your time effectively. You can create, view, and edit appointments for each hour of the work day.
 
+![Web Page Screenshot](.images/work scheduler.png)
+
+## Code Example
+
+These lines of code shows a function that reads the local storage to see if there are saved appointments or events. If there is any saved event, it will be converted from string data type to object data and be stored in a variable called myPlanner.
+```js
+function readLocalStorage() {
+  console.log(myPlanner);
+  myPlanner = JSON.parse(localStorage.getItem("appointment"));
+  if(!myPlanner){
+    myPlanner = {};
+  }
+}
+```
+Next, we have a function that will check if a variable called myPlanner has event(s) stored in it. If there is any, it will display it on the webpage
+```js
+function renderAppointment() {
+  if (myPlanner){
+    for (var [key, value] of Object.entries(myPlanner)) {
+      $(`#${key} textarea`).val(value);
+    }
+  }
+}
+```
+
 ## Features
 
 - View the current day and date at the top of the page.
