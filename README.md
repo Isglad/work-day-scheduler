@@ -21,7 +21,7 @@
 
 Welcome to the Work Day Scheduler! This is a simple web application that allows you to add important events by the hour so that you can manage your time effectively. You can create, view, and edit appointments for each hour of the work day.
 
-![Web Page Screenshot](.images/work scheduler.png)
+![Web Page Screenshot](/images/work%20scheduler.png)
 
 ## Code Example
 
